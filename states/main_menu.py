@@ -3,8 +3,9 @@ import pygame
 import cv2
 
 class MainMenuButton:
-    def __init__(self, screen, image, scale_width, scale_height, SCREEN_WIDTH, SCREEN_HEIGHT, space=0):
+    def __init__(self, button, screen, image, scale_width, scale_height, SCREEN_WIDTH, SCREEN_HEIGHT, space=0):
         self.screen = screen
+        self.button = button
 
         self.SCREEN_WIDTH = SCREEN_WIDTH 
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
@@ -34,6 +35,7 @@ class MainMenuButton:
             self.center_x = (self.SCREEN_WIDTH // 2) - (self.scaled_button.get_width() // 2)
             self.center_y = ((self.SCREEN_HEIGHT // 2) - (self.scaled_button.get_height() // 2)) + self.space
             self.center_cords = (self.center_x, self.center_y)
+            return True
         else: # reset
             self.scaled_button = pygame.transform.scale(self.image, (self.scaled_width, self.scaled_height)) 
 
@@ -55,9 +57,9 @@ class MainMenu(MainMenuButton):
         self.continue_img = pygame.image.load("./assets/images/buttons/continue_button.png").convert_alpha()
         self.settings_img = pygame.image.load("./assets/images/buttons/settings_button.png").convert_alpha()
 
-        self.start_btn = MainMenuButton(screen, self.start_img, 230, 65, WIDTH, HEIGHT, -65)
-        self.continue_btn = MainMenuButton(screen, self.continue_img, 210, 65, WIDTH, HEIGHT)
-        self.settings_btn = MainMenuButton(screen, self.settings_img, 190, 65, WIDTH, HEIGHT, 60)
+        self.start_btn = MainMenuButton("START" ,screen, self.start_img, 230, 65, WIDTH, HEIGHT, -65)
+        self.continue_btn = MainMenuButton("CONTINUE", screen, self.continue_img, 210, 65, WIDTH, HEIGHT)
+        self.settings_btn = MainMenuButton("SETTINGS", screen, self.settings_img, 190, 65, WIDTH, HEIGHT, 60)
 
     def run(self):
         for event in pygame.event.get():
