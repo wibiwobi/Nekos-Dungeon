@@ -9,7 +9,6 @@ class Tile(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(topleft = pos)
 
 
-
 class ForestLevel:
     def __init__(self, screen):
         self.screen = screen
@@ -25,6 +24,10 @@ class ForestLevel:
         self.initial_screen_x = 150
         self.initial_screen_y = 780
         self.scale_intensity = 2.5
+
+        self.spawn_point_pos = ""
+        self.main_character_idle_frames = [pygame.image.load(f"assets/frames/main_character/idle/frame_{i}.png").convert_alpha() for i in range(4)]
+
 
 
         # all visible objects here
@@ -46,23 +49,24 @@ class ForestLevel:
                 surf = pygame.transform.scale(obj.image, (obj.image.get_width() * self.scale_intensity, obj.image.get_height() * self.scale_intensity)).convert_alpha()
                 surf.set_colorkey((0, 0, 0))
                 all_objects.append(((obj.y - self.initial_screen_y) * self.scale_intensity, (obj.x - self.initial_screen_x) * self.scale_intensity, surf))
-        
+            
+            if obj.name == "Initial Spawn Point":
+               self.spawn_point_pos = ((obj.x - self.initial_screen_x) * self.scale_intensity, (obj.y - self.initial_screen_y) * self.scale_intensity)
+
         all_objects.sort(key=lambda tuple:tuple[0])
-           
         for y, x, surf in all_objects:
             Tile(pos = (x, y), surf = surf , groups=self.sprite_group)
 
-
+    def spawn_main_character(self):
+        print("SPAWN")
+        self.screen.blit(self.main_character_idle_frames[0], self.spawn_point_pos)
+    
     def draw_map(self):
         self.sprite_group.draw(self.screen) 
 
-
-        
-    def spawn_main_character(self):
-        pass
-
     def run(self):
-        pass
+        print("FOREST")
+        self.spawn_main_character()
 
 
 """    tmx_forest_data = load_pygame("./assets/tiled/tile_maps/forest_map.tmx")

@@ -602,7 +602,7 @@
   <object id="2832" gid="77" x="1029.46" y="925.41" width="48" height="64"/>
   <object id="2833" gid="77" x="1012.46" y="980.74" width="48" height="64"/>
   <object id="2834" gid="77" x="1016.12" y="1024.74" width="48" height="64"/>
-  <object id="2835" name="Main Character Spawn Point" x="400.54" y="1010.66">
+  <object id="2835" name="Initial Spawn Point" type="Spawn" x="400.54" y="1010.66">
    <point/>
   </object>
   <object id="2836" gid="77" x="206.79" y="823.41" width="48" height="64"/>
