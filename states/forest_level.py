@@ -1,6 +1,7 @@
 
 from pytmx.util_pygame import load_pygame
 import pygame
+from entities.main_character import MainCharacter
 
 class Tile(pygame.sprite.Sprite):
     def __init__(self, pos, surf, groups):
@@ -25,10 +26,10 @@ class ForestLevel:
         self.initial_screen_y = 780
         self.scale_intensity = 2.5
 
-        self.spawn_point_pos = ""
-        self.main_character_idle_frames = [pygame.image.load(f"assets/frames/main_character/idle/frame_{i}.png").convert_alpha() for i in range(4)]
 
+        self.main_character = MainCharacter(self.screen, self.get_main_character_spawn_point())
 
+        
 
         # all visible objects here
 
@@ -57,47 +58,14 @@ class ForestLevel:
         for y, x, surf in all_objects:
             Tile(pos = (x, y), surf = surf , groups=self.sprite_group)
 
-    def spawn_main_character(self):
-        print("SPAWN")
-        self.screen.blit(self.main_character_idle_frames[0], self.spawn_point_pos)
+    def get_main_character_spawn_point(self):
+        for obj in self.obj_1:
+            if obj.name == "Initial Spawn Point":
+               return ((obj.x - self.initial_screen_x) * self.scale_intensity, (obj.y - self.initial_screen_y) * self.scale_intensity)
+    
     
     def draw_map(self):
         self.sprite_group.draw(self.screen) 
 
     def run(self):
-        print("FOREST")
-        self.spawn_main_character()
-
-
-"""    tmx_forest_data = load_pygame("./assets/tiled/tile_maps/forest_map.tmx")
-floor1_layer = tmx_forest_data.get_layer_by_name("Tile Layer 1")
-        obj1_layer = tmx_forest_data.get_layer_by_name("Object Layer 1")
-
-
-        for obj in obj1_layer:
-            if obj.name == "Main Character Spawn Point":
-                print(obj)  """
-
-
-
-
-# once the forest banner is pressed, i don't know what are the things that needs to be loaded initially? 
-
-# initial attributes
-    # screen
-    # all layers
-    # all objects
-
-# loading the map
-    # edge cases
-        # changing the coordinates
-            # - multiply the x and y to something
-    # draw map func
-        # objects and layers
-        # x, y, img                                   
-
-
-
-# spawning the main character == once, this one is just a box, color is red
-
-
+        self.main_character.draw_frames()
